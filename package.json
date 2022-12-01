@@ -1,0 +1,19 @@
+{
+  "name": "advent-of-code-2022",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "01": "ts-node ./src/01.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bencoveney/advent-of-code-2022.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bencoveney/advent-of-code-2022/issues"
+  },
+  "homepage": "https://github.com/bencoveney/advent-of-code-2022#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
