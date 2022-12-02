@@ -11,7 +11,8 @@ const testInput = `1000
 8000
 9000
 
-10000`;
+10000
+`;
 
 const realInput = `17998
 7761
