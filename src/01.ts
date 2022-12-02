@@ -2249,18 +2249,21 @@ const realInput = `17998
 2639
 10883
 10054
-13688`;
+13688
+`;
 
 function getMost(input: string) {
   const elves = [0];
   
   const lines = input.split("\n").map(line => line.trim());
   
+  let current = 0;
   for (const cal of lines) {
     if (cal === "") {
-      elves.push(0);
+      elves.push(current);
+      current = 0;
     } else {
-      elves[elves.length - 1] += parseInt(cal);
+      current += parseInt(cal);
     }
   };
 
