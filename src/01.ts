@@ -2253,7 +2253,7 @@ const realInput = `17998
 13688
 `;
 
-function getMost(input: string) {
+export function getMost(input: string) {
   const elves = [0];
   
   const lines = input.split("\n").map(line => line.trim());

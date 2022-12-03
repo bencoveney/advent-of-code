@@ -2544,7 +2544,7 @@ function play(opponent: Choices, you: Choices): number {
   return score;
 }
 
-function getScore(input: string) {
+export function getScore(input: string) {
   return input.split("\n").filter(line => !!line).map(line => {
     const opponent = choiceMap[line.charAt(0)];
     const you = choiceMap[line.charAt(2)];
@@ -2571,7 +2571,7 @@ const outcomeMap: {[key: string]: {[key: string]: Choices}} = {
   },
 }
 
-function getChoiceAndScore(input: string) {
+export function getChoiceAndScore(input: string) {
   return input.split("\n").filter(line => !!line).map(line => {
     const opponent = choiceMap[line.charAt(0)];
     const you = outcomeMap[line.charAt(2)][opponent];
