@@ -1,3 +1,5 @@
+import { Input } from "./utils";
+
 const enum Choices {
   Rock = "Rock",
   Paper = "Paper",
@@ -37,14 +39,6 @@ function play(opponent: Choices, you: Choices): number {
   return score;
 }
 
-export function getScore(input: string) {
-  return input.split("\n").filter(line => !!line).map(line => {
-    const opponent = choiceMap[line.charAt(0)];
-    const you = choiceMap[line.charAt(2)];
-    return play(opponent, you);
-  }).reduce((prev, next) => prev + next, 0);
-}
-
 const outcomeMap: {[key: string]: {[key: string]: Choices}} = {
   // Lose
   "X": {
@@ -64,18 +58,24 @@ const outcomeMap: {[key: string]: {[key: string]: Choices}} = {
   },
 }
 
-export function getChoiceAndScore(input: string) {
-  return input.split("\n").filter(line => !!line).map(line => {
+export function part1({lines}: Input) {
+  return lines.filter(line => !!line).map(line => {
+    const opponent = choiceMap[line.charAt(0)];
+    const you = choiceMap[line.charAt(2)];
+    return play(opponent, you);
+  }).reduce((prev, next) => prev + next, 0);
+}
+
+part1.test = 15;
+part1.real = 15523;
+
+export function part2({lines}: Input) {
+  return lines.filter(line => !!line).map(line => {
     const opponent = choiceMap[line.charAt(0)];
     const you = outcomeMap[line.charAt(2)][opponent];
     return play(opponent, you);
   }).reduce((prev, next) => prev + next, 0);
 }
 
-export function part1(input: string) {
-  return getScore(input);
-}
-
-export function part2(input: string) {
-  return getChoiceAndScore(input);
-}
+part2.test = 12;
+part2.real = 15702;

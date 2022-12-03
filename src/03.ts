@@ -1,3 +1,5 @@
+import { Input } from "./utils";
+
 function getItems(rucksack: string): [string, string] {
   const perCompartment = rucksack.length / 2;
   return [rucksack.slice(0, perCompartment), rucksack.slice(perCompartment)];
@@ -71,19 +73,8 @@ function getPriority(item: string): number {
   return priorityOrder.indexOf(item) + 1;
 }
 
-function getPrioritySum(input: string): number {
-  return input
-    .split("\n")
-    .filter((line) => !!line)
-    .map((line) => getItems(line))
-    .map((rucksack) => findMatchingItem(rucksack))
-    .map((item) => getPriority(item))
-    .reduce((prev, next) => prev + next, 0);
-}
-
-function getGroups(input: string) {
-  return input
-    .split("\n")
+function getGroups(lines: string[]) {
+  return lines
     .filter((line) => !!line)
     .reduce((prev, next) => {
       const lastGroup = prev[prev.length - 1];
@@ -95,7 +86,6 @@ function getGroups(input: string) {
       return prev;
     }, [] as string[][]);
 }
-
 function findCommonLetter(group: string[]) {
   const items: { [item: string]: number } = {};
   group.forEach((elf) => {
@@ -118,15 +108,26 @@ function findCommonLetter(group: string[]) {
 }
 
 export function findGroupPriorities(input: string) {
-  return getGroups(input)
+  return;
+}
+
+export function part1({ lines }: Input) {
+  return lines
+    .filter((line) => !!line)
+    .map((line) => getItems(line))
+    .map((rucksack) => findMatchingItem(rucksack))
+    .map((item) => getPriority(item))
+    .reduce((prev, next) => prev + next, 0);
+}
+
+part1.test = 157;
+part1.real = 7568;
+
+export function part2({ lines }: Input) {
+  return getGroups(lines)
     .map((group) => getPriority(findCommonLetter(group)))
     .reduce((prev, next) => prev + next, 0);
 }
 
-export function part1(input: string) {
-  return getPrioritySum(input);
-}
-
-export function part2(input: string) {
-  return findGroupPriorities(input);
-}
+part2.test = 70;
+part2.real = 2780;

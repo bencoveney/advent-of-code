@@ -1,7 +1,7 @@
-export function getMost(input: string) {
+import { Input } from "./utils";
+
+export function getElves(lines: string[]): number[] {
   const elves = [0];
-  
-  const lines = input.split("\n").map(line => line.trim());
   
   let current = 0;
   for (const cal of lines) {
@@ -12,19 +12,25 @@ export function getMost(input: string) {
       current += parseInt(cal);
     }
   };
+  elves.push(current);
 
   elves.sort((a, b) => a-b).reverse();
 
-  return {
-    max: elves[0],
-    topThree: elves[0] + elves[1] + elves[2]
-  }
+  return elves;
 }
 
-export function part1(input: string) {
-  return getMost(input).max;
+export function part1(input: Input) {
+  const elves = getElves(input.allLines);
+  return elves[0];
 };
 
-export function part2(input: string) {
-  return getMost(input).topThree;
+part1.test = 24000;
+part1.real = 67658;
+
+export function part2(input: Input) {
+  const elves = getElves(input.allLines);
+  return elves[0] + elves[1] + elves[2];
 };
+
+part2.test = 45000;
+part2.real = 200158;
