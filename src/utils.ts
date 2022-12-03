@@ -1,4 +1,14 @@
 import chalk from "chalk";
+import fs from "fs/promises";
+
+export async function loadSolutions() {
+  const list = await fs.readdir("./src");
+  return list.filter((file) => file.match(/\d\d\.ts/) != null).sort();
+}
+
+export function leftPad(text: string, length: number, padWith: string = "0") {
+  return padWith.repeat(length - text.length) + text;
+}
 
 export type Input = {
   raw: string; // Caveat: Trailing whitespace trimmed.
@@ -35,12 +45,30 @@ export function chunk<T = any>(arr: T[], chunkSize: number): T[][] {
   }, [] as T[][]);
 }
 
+export function copyArr<T = any>(arr: T[]): T[] {
+  return arr.concat([]);
+}
+
 export function sum(nums: number[]): number {
   return nums.reduce((prev, next) => prev + next, 0);
 }
 
-export function sortNums(nums: number[]): number[] {
-  return nums.sort((a, b) => a - b);
+export function sortNumsAsc(nums: number[]): number[] {
+  return copyArr(nums).sort((a, b) => a - b);
+}
+
+export function sortNumsDesc(nums: number[]): number[] {
+  return sortNumsAsc(nums).reverse();
+}
+
+export function highest(nums: number[]): number {
+  const sorted = sortNumsDesc(nums);
+  return sorted[0] || 0;
+}
+
+export function lowest(nums: number[]): number {
+  const sorted = sortNumsAsc(nums);
+  return sorted[0] || 0;
 }
 
 export const alphabet = [

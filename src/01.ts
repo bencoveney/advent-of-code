@@ -1,4 +1,4 @@
-import { Input, sortNums, sum } from "./utils.js";
+import { Input, sortNumsDesc, sum } from "./utils.js";
 
 export function getElves(lines: string[]): number[] {
   const elves = [0];
@@ -14,9 +14,7 @@ export function getElves(lines: string[]): number[] {
   }
   elves.push(current);
 
-  sortNums(elves).reverse();
-
-  return elves;
+  return sortNumsDesc(elves);
 }
 
 export function part1({ allLines }: Input) {

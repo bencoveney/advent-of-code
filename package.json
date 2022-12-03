@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "latest": "ts-node --esm ./src/harness.ts",
-    "all": "ts-node --esm ./src/harness.ts --all"
+    "all": "ts-node --esm ./src/harness.ts --all",
+    "template": "ts-node --esm ./src/template.ts"
   },
   "repository": {
     "type": "git",

@@ -1,11 +1,6 @@
 import fs from "fs/promises";
-import { festive, Input, PartAnswer } from "./utils.js";
+import { festive, Input, loadSolutions, PartAnswer } from "./utils.js";
 import chalk from "chalk";
-
-async function loadSolutions() {
-  const list = await fs.readdir("./src");
-  return list.filter((file) => file.match(/\d\d\.ts/) != null).sort();
-}
 
 async function loadFile(name: string): Promise<Input | null> {
   try {
