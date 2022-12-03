@@ -59,7 +59,7 @@ const outcomeMap: {[key: string]: {[key: string]: Choices}} = {
 }
 
 export function part1({lines}: Input) {
-  return lines.filter(line => !!line).map(line => {
+  return lines.map(line => {
     const opponent = choiceMap[line.charAt(0)];
     const you = choiceMap[line.charAt(2)];
     return play(opponent, you);
@@ -70,7 +70,7 @@ part1.test = 15;
 part1.real = 15523;
 
 export function part2({lines}: Input) {
-  return lines.filter(line => !!line).map(line => {
+  return lines.map(line => {
     const opponent = choiceMap[line.charAt(0)];
     const you = outcomeMap[line.charAt(2)][opponent];
     return play(opponent, you);

@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 export type Input = {
   raw: string; // Caveat: Trailing whitespace trimmed.
   lines: string[]; // Excludes empty.
@@ -9,3 +11,7 @@ export type PartAnswer<T = number> = {
   real?: T;
   (input: Input): T;
 };
+
+export function festive(text: string): string {
+  return text.split("").map((character, index) => index % 2 === 0 ? chalk.redBright(character) : chalk.greenBright(character)).join("");
+}

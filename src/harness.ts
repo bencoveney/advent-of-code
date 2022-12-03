@@ -1,5 +1,6 @@
 import fs from "fs/promises";
-import { Input, PartAnswer } from "./utils";
+import { festive, Input, PartAnswer } from "./utils.js";
+import chalk from "chalk";
 
 async function loadSolutions() {
   const list = await fs.readdir("./src");
@@ -10,57 +11,89 @@ async function loadFile(name: string): Promise<Input | null> {
   try {
     const raw = (await fs.readFile(name, "utf8")).trim();
     const allLines = raw.split("\n");
-    const lines = allLines.filter(line => !!line);
-    return {raw, allLines, lines};
+    const lines = allLines.filter((line) => !!line);
+    return { raw, allLines, lines };
   } catch (e) {
     console.log(`${name} not found`);
     return null;
   }
 }
 
-async function loadInputs(solution: string): Promise<[Input | null, Input | null]> {
+async function loadInputs(
+  solution: string
+): Promise<[Input | null, Input | null]> {
   return [
     await loadFile(`./src/${solution.slice(0, 2)}.test.txt`),
     await loadFile(`./src/${solution.slice(0, 2)}.input.txt`),
   ];
 }
 
-function runPartAgainstInput(part: PartAnswer, input: Input | null, expected: any, name: string) {
-  if (input == null) {
-    console.log(`- ${name} Missing`);
+function runPartAgainstInput(
+  part: PartAnswer | undefined,
+  input: Input | null,
+  expected: any,
+  name: string
+) {
+  if (!part) {
+    console.log(chalk.gray(`- ${name}: No Solution`));
+    return;
+  }
+  if (!input) {
+    console.log(chalk.gray(`- ${name}: No Input`));
     return;
   }
   let result = undefined;
   try {
     result = part(input);
   } catch (e) {
-    console.error(e && (e as Error).message || e);
-    result = "err";
+    console.error((e && (e as Error).message) || e);
+    result = chalk.redBright("err");
   }
-  const correct = expected === undefined ? "Unknown" : Object.is(result, expected) ? "Correct" : `Wrong - Expected ${expected}`;
-  console.log(`- ${name}: ${result} (${correct})`)
+  const correct =
+    expected === undefined
+      ? chalk.gray("Unknown")
+      : Object.is(result, expected)
+      ? chalk.greenBright("Correct")
+      : chalk.redBright(`Expected ${expected}`);
+  console.log(`${chalk.gray(`- ${name}:`)} ${result} (${correct})`);
+}
+
+function writeTitle(text: string) {
+  console.log(`${festive("---")} ${chalk.underline(text)} ${festive("---")}`);
 }
 
 async function runSolution(solution: string) {
-  console.log("---", solution, "---");
+  writeTitle(solution);
   const [test, real] = await loadInputs(solution);
   const loadedSolution = await import(`./${solution}`);
 
   console.log("\nPart 1:");
-  if (loadedSolution.part1) {
-    runPartAgainstInput(loadedSolution.part1, test, loadedSolution.part1.test, "Test");
-    runPartAgainstInput(loadedSolution.part1, real, loadedSolution.part1.real, "Real");
-  } else {
-    console.log("- Missing export part1()");
-  }
+  runPartAgainstInput(
+    loadedSolution.part1,
+    test,
+    loadedSolution.part1?.test,
+    "Test"
+  );
+  runPartAgainstInput(
+    loadedSolution.part1,
+    real,
+    loadedSolution.part1?.real,
+    "Real"
+  );
 
   console.log("\nPart 2:");
-  if (loadedSolution.part2) {
-    runPartAgainstInput(loadedSolution.part2, test, loadedSolution.part2.test, "Test");
-    runPartAgainstInput(loadedSolution.part2, real, loadedSolution.part2.real, "Real");
-  } else {
-    console.log("- Missing export part2()");
-  }
+  runPartAgainstInput(
+    loadedSolution.part2,
+    test,
+    loadedSolution.part2?.test,
+    "Test"
+  );
+  runPartAgainstInput(
+    loadedSolution.part2,
+    real,
+    loadedSolution.part2?.real,
+    "Real"
+  );
 
   console.log("");
 }

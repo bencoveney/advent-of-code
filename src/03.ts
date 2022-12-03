@@ -75,7 +75,6 @@ function getPriority(item: string): number {
 
 function getGroups(lines: string[]) {
   return lines
-    .filter((line) => !!line)
     .reduce((prev, next) => {
       const lastGroup = prev[prev.length - 1];
       if (!lastGroup || lastGroup.length === 3) {
@@ -113,7 +112,6 @@ export function findGroupPriorities(input: string) {
 
 export function part1({ lines }: Input) {
   return lines
-    .filter((line) => !!line)
     .map((line) => getItems(line))
     .map((rucksack) => findMatchingItem(rucksack))
     .map((item) => getPriority(item))
