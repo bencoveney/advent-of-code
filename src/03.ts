@@ -1,4 +1,4 @@
-import { Input } from "./utils";
+import { alphabet, chunk, Input, sum } from "./utils.js";
 
 function getItems(rucksack: string): [string, string] {
   const perCompartment = rucksack.length / 2;
@@ -15,76 +15,14 @@ function findMatchingItem([first, second]: [string, string]): string {
 }
 
 const priorityOrder = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
+  ...alphabet,
+  ...alphabet.map((letter) => letter.toUpperCase()),
 ];
 
 function getPriority(item: string): number {
   return priorityOrder.indexOf(item) + 1;
 }
 
-function getGroups(lines: string[]) {
-  return lines
-    .reduce((prev, next) => {
-      const lastGroup = prev[prev.length - 1];
-      if (!lastGroup || lastGroup.length === 3) {
-        prev.push([next]);
-      } else {
-        lastGroup.push(next);
-      }
-      return prev;
-    }, [] as string[][]);
-}
 function findCommonLetter(group: string[]) {
   const items: { [item: string]: number } = {};
   group.forEach((elf) => {
@@ -106,25 +44,22 @@ function findCommonLetter(group: string[]) {
     .map(([item, _]) => item)[0];
 }
 
-export function findGroupPriorities(input: string) {
-  return;
-}
-
 export function part1({ lines }: Input) {
-  return lines
-    .map((line) => getItems(line))
-    .map((rucksack) => findMatchingItem(rucksack))
-    .map((item) => getPriority(item))
-    .reduce((prev, next) => prev + next, 0);
+  return sum(
+    lines
+      .map((line) => getItems(line))
+      .map((rucksack) => findMatchingItem(rucksack))
+      .map((item) => getPriority(item))
+  );
 }
 
 part1.test = 157;
 part1.real = 7568;
 
 export function part2({ lines }: Input) {
-  return getGroups(lines)
-    .map((group) => getPriority(findCommonLetter(group)))
-    .reduce((prev, next) => prev + next, 0);
+  return sum(
+    chunk(lines, 3).map((group) => getPriority(findCommonLetter(group)))
+  );
 }
 
 part2.test = 70;

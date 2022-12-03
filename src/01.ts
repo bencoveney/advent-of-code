@@ -1,8 +1,8 @@
-import { Input } from "./utils";
+import { Input, sortNums, sum } from "./utils.js";
 
 export function getElves(lines: string[]): number[] {
   const elves = [0];
-  
+
   let current = 0;
   for (const cal of lines) {
     if (cal === "") {
@@ -11,26 +11,24 @@ export function getElves(lines: string[]): number[] {
     } else {
       current += parseInt(cal);
     }
-  };
+  }
   elves.push(current);
 
-  elves.sort((a, b) => a-b).reverse();
+  sortNums(elves).reverse();
 
   return elves;
 }
 
-export function part1({allLines}: Input) {
-  const elves = getElves(allLines);
-  return elves[0];
-};
+export function part1({ allLines }: Input) {
+  return getElves(allLines)[0];
+}
 
 part1.test = 24000;
 part1.real = 67658;
 
-export function part2({allLines}: Input) {
-  const elves = getElves(allLines);
-  return elves[0] + elves[1] + elves[2];
-};
+export function part2({ allLines }: Input) {
+  return sum(getElves(allLines).slice(0, 3));
+}
 
 part2.test = 45000;
 part2.real = 200158;
