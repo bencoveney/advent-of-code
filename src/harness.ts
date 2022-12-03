@@ -35,10 +35,10 @@ function runPartAgainstInput(
   name: string
 ) {
   if (!part) {
-    console.log(chalk.gray(`- ${name}: No Solution`));
+    console.log(chalk.gray(`- ${name}: No part()`));
     return;
   }
-  if (!input) {
+  if (!input || !input.raw) {
     console.log(chalk.gray(`- ${name}: No Input`));
     return;
   }
@@ -48,6 +48,10 @@ function runPartAgainstInput(
   } catch (e) {
     console.error((e && (e as Error).message) || e);
     result = chalk.redBright("err");
+  }
+  if (!result) {
+    console.log(chalk.gray(`- ${name}: No Result`));
+    return;
   }
   const correct =
     expected === undefined
