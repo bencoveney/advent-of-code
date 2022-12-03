@@ -6,7 +6,9 @@
   "scripts": {
     "01": "ts-node --esm ./src/01.ts",
     "02": "ts-node --esm ./src/02.ts",
-    "03": "ts-node --esm ./src/03.ts"
+    "03": "ts-node --esm ./src/03.ts",
+    "latest": "ts-node --esm ./src/harness.ts",
+    "all": "ts-node --esm ./src/harness.ts --all"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,9 @@
   },
   "homepage": "https://github.com/bencoveney/advent-of-code-2022#readme",
   "devDependencies": {
+  },
+  "dependencies": {
+    "@types/node": "^18.11.10",
     "ts-node": "^10.9.1"
   }
 }
