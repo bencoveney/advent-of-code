@@ -4,7 +4,7 @@ import chalk from "chalk";
 
 async function loadFile(name: string): Promise<Input | null> {
   try {
-    const raw = (await fs.readFile(name, "utf8")).trim();
+    const raw = (await fs.readFile(name, "utf8")).trimEnd();
     const allLines = raw.split("\n");
     const lines = allLines.filter((line) => !!line);
     return { raw, allLines, lines };
