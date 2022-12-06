@@ -7,7 +7,8 @@ async function loadFile(name: string): Promise<Input | null> {
     const raw = (await fs.readFile(name, "utf8")).trimEnd();
     const allLines = raw.split("\n");
     const lines = allLines.filter((line) => !!line);
-    return { raw, allLines, lines };
+    const chars = lines[0].split("");
+    return { raw, allLines, lines, chars };
   } catch (e) {
     console.log(`${name} not found`);
     return null;
@@ -28,14 +29,14 @@ function runPartAgainstInput(
   input: Input | null,
   expected: any,
   name: string
-) {
+): boolean {
   if (!part) {
     console.log(chalk.gray(`- ${name}: No part()`));
-    return;
+    return false;
   }
   if (!input || !input.raw) {
     console.log(chalk.gray(`- ${name}: No Input`));
-    return;
+    return false;
   }
   let result = undefined;
   try {
@@ -46,7 +47,7 @@ function runPartAgainstInput(
   }
   if (!result) {
     console.log(chalk.gray(`- ${name}: No Result`));
-    return;
+    return false;
   }
   const correct =
     expected === undefined
@@ -55,6 +56,7 @@ function runPartAgainstInput(
       ? chalk.greenBright("Correct")
       : chalk.redBright(`Expected ${expected}`);
   console.log(`${chalk.gray(`- ${name}:`)} ${result} (${correct})`);
+  return Object.is(result, expected);
 }
 
 function writeTitle(text: string) {
@@ -67,32 +69,34 @@ async function runSolution(solution: string) {
   const loadedSolution = await import(`./${solution}`);
 
   console.log("\nPart 1:");
-  runPartAgainstInput(
+  const part1TestPassed = runPartAgainstInput(
     loadedSolution.part1,
     test,
     loadedSolution.part1?.test,
     "Test"
   );
-  runPartAgainstInput(
-    loadedSolution.part1,
-    real,
-    loadedSolution.part1?.real,
-    "Real"
-  );
+  part1TestPassed &&
+    runPartAgainstInput(
+      loadedSolution.part1,
+      real,
+      loadedSolution.part1?.real,
+      "Real"
+    );
 
   console.log("\nPart 2:");
-  runPartAgainstInput(
+  const part2TestPassed = runPartAgainstInput(
     loadedSolution.part2,
     test,
     loadedSolution.part2?.test,
     "Test"
   );
-  runPartAgainstInput(
-    loadedSolution.part2,
-    real,
-    loadedSolution.part2?.real,
-    "Real"
-  );
+  part2TestPassed &&
+    runPartAgainstInput(
+      loadedSolution.part2,
+      real,
+      loadedSolution.part2?.real,
+      "Real"
+    );
 
   console.log("");
 }

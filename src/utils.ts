@@ -14,6 +14,7 @@ export type Input = {
   raw: string; // Caveat: Trailing whitespace trimmed.
   lines: string[]; // Excludes empty.
   allLines: string[]; // Includes empty.
+  chars: string[]; // First line.
 };
 
 export type PartAnswer<T = number> = {

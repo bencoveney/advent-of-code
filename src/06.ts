@@ -13,17 +13,15 @@ function findMarker(chars: string[], length: number) {
   return -1;
 }
 
-export function part1({ lines }: Input) {
-  const input = lines[0].split("");
-  return findMarker(input, 4);
+export function part1({ chars }: Input) {
+  return findMarker(chars, 4);
 }
 
 part1.test = 7;
 part1.real = 1282;
 
-export function part2({ lines }: Input) {
-  const input = lines[0].split("");
-  return findMarker(input, 14);
+export function part2({ chars }: Input) {
+  return findMarker(chars, 14);
 }
 
 part2.test = 19;
