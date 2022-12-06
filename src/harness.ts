@@ -7,7 +7,7 @@ async function loadFile(name: string): Promise<Input | null> {
     const raw = (await fs.readFile(name, "utf8")).trimEnd();
     const allLines = raw.split("\n");
     const lines = allLines.filter((line) => !!line);
-    const chars = lines[0].split("");
+    const chars = lines[0]?.split("") || [];
     return { raw, allLines, lines, chars };
   } catch (e) {
     console.log(`${name} not found`);
