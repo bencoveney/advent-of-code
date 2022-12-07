@@ -64,16 +64,6 @@ function buildFsFromCommands(commands: string[]) {
   return root;
 }
 
-function logDir(dir: Dir) {
-  console.log(
-    JSON.stringify(
-      dir,
-      (key, value) => (key === "parent" ? undefined : value),
-      2
-    )
-  );
-}
-
 function forEachChild(target: Dir, cb: (content: File | Dir) => void) {
   Object.entries(target.content).forEach(([_, value]) => {
     cb(value);
@@ -112,13 +102,12 @@ export function part1({ lines }: Input) {
 part1.test = 95437;
 part1.real = 1743217;
 
-export function part2({ raw, lines, allLines, chars }: Input) {
+export function part2({ lines }: Input) {
   const fileSystem = buildFsFromCommands(lines);
   const diskSpaceAvailable = 70000000;
-  const diskSpaceNeededUpd = 30000000;
-  const diskSpaceUsed = getDirectorySize(fileSystem);
+  const diskSpaceNeeded = 30000000;
   const freeSpaceNeeded =
-    diskSpaceUsed - (diskSpaceAvailable - diskSpaceNeededUpd);
+    getDirectorySize(fileSystem) - (diskSpaceAvailable - diskSpaceNeeded);
   const sizes = sortNumsAsc(getDirectorySizes(fileSystem)).filter(
     (size) => size >= freeSpaceNeeded
   );
