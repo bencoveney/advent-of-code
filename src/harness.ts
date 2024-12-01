@@ -102,7 +102,7 @@ async function runSolution(solution: string, year: number) {
   console.log("");
 }
 
-const latestYear = 2022;
+const latestYear = 2024;
 
 const solutions = await loadSolutions(latestYear);
 if (process.argv.includes("--all")) {
