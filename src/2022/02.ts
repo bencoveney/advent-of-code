@@ -1,4 +1,4 @@
-import { Input, sum } from "./utils.js";
+import { Input, sum } from "../utils.js";
 
 const enum Choices {
   Rock = "Rock",

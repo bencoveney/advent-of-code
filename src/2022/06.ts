@@ -1,4 +1,4 @@
-import { Input } from "./utils.js";
+import { Input } from "../utils.js";
 
 function isUniqueAll(chars: string[]) {
   return new Set(chars).size === chars.length;

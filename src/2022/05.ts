@@ -1,4 +1,4 @@
-import { Input } from "./utils.js";
+import { Input } from "../utils.js";
 
 type Stack = string[];
 type Stacks = Stack[];

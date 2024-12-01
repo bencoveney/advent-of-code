@@ -16,11 +16,12 @@ async function loadFile(name: string): Promise<Input | null> {
 }
 
 async function loadInputs(
-  solution: string
+  solution: string,
+  year: number
 ): Promise<[Input | null, Input | null]> {
   return [
-    await loadFile(`./src/${solution.slice(0, 2)}.test.txt`),
-    await loadFile(`./src/${solution.slice(0, 2)}.input.txt`),
+    await loadFile(`./src/${year}/${solution.slice(0, 2)}.test.txt`),
+    await loadFile(`./src/${year}/${solution.slice(0, 2)}.input.txt`),
   ];
 }
 
@@ -63,10 +64,10 @@ function writeTitle(text: string) {
   console.log(`${festive("---")} ${chalk.underline(text)} ${festive("---")}`);
 }
 
-async function runSolution(solution: string) {
+async function runSolution(solution: string, year: number) {
   writeTitle(solution);
-  const [test, real] = await loadInputs(solution);
-  const loadedSolution = await import(`./${solution}`);
+  const [test, real] = await loadInputs(solution, year);
+  const loadedSolution = await import(`./${year}/${solution}`);
 
   console.log("\nPart 1:");
   const part1TestPassed = runPartAgainstInput(
@@ -101,12 +102,14 @@ async function runSolution(solution: string) {
   console.log("");
 }
 
-const solutions = await loadSolutions();
+const latestYear = 2022;
+
+const solutions = await loadSolutions(latestYear);
 if (process.argv.includes("--all")) {
   await solutions.reduce(
-    (prev, next) => prev.then(() => runSolution(next)),
+    (prev, next) => prev.then(() => runSolution(next, latestYear)),
     Promise.resolve()
   );
 } else {
-  await runSolution(solutions[solutions.length - 1]);
+  await runSolution(solutions[solutions.length - 1], latestYear);
 }

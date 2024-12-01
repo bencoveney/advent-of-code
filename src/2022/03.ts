@@ -1,4 +1,4 @@
-import { alphabet, chunk, Input, sum } from "./utils.js";
+import { alphabet, chunk, Input, sum } from "../utils.js";
 
 function getItems(rucksack: string): [string, string] {
   const perCompartment = rucksack.length / 2;

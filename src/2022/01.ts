@@ -1,4 +1,4 @@
-import { Input, sortNumsDesc, sum } from "./utils.js";
+import { Input, sortNumsDesc, sum } from "../utils.js";
 
 export function getElves(lines: string[]): number[] {
   const elves = [0];

@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import fs from "fs/promises";
 
-export async function loadSolutions() {
-  const list = await fs.readdir("./src");
+export async function loadSolutions(year: number) {
+  const list = await fs.readdir(`./src/${year}`);
   return list.filter((file) => file.match(/\d\d\.ts/) != null).sort();
 }
 

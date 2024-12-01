@@ -1,4 +1,4 @@
-import { Input, sortNumsAsc, sum } from "./utils.js";
+import { Input, sortNumsAsc, sum } from "../utils.js";
 
 type File = {
   kind: "file";

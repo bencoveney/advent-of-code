@@ -1,4 +1,4 @@
-import { Input } from "./utils.js";
+import { Input } from "../utils.js";
 
 type Visibility = {
   height: number;
