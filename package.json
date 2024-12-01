@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "latest": "tsx ./src/harness.ts",
-    "all": "tsx ./src/harness.ts --all",
+    "latest": "tsx ./src/harness.ts --mode=latest",
+    "all": "tsx ./src/harness.ts --mode=all",
     "template": "tsx ./src/template.ts"
   },
   "repository": {

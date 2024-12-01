@@ -1,5 +1,12 @@
 import fs from "fs/promises";
-import { festive, Input, loadSolutions, PartAnswer } from "./utils.js";
+import {
+  festive,
+  getCliArgs,
+  Input,
+  loadSolutions,
+  Mode,
+  PartAnswer,
+} from "./utils.js";
 import chalk from "chalk";
 
 async function loadFile(name: string): Promise<Input | null> {
@@ -102,14 +109,18 @@ async function runSolution(solution: string, year: number) {
   console.log("");
 }
 
-const latestYear = 2024;
+const { mode, year } = getCliArgs();
+console.log(
+  `Running ${chalk.yellow(mode)} exercises from ${chalk.yellow(year)}\n`
+);
 
-const solutions = await loadSolutions(latestYear);
-if (process.argv.includes("--all")) {
+const solutions = await loadSolutions(year);
+
+if (mode === Mode.All) {
   await solutions.reduce(
-    (prev, next) => prev.then(() => runSolution(next, latestYear)),
+    (prev, next) => prev.then(() => runSolution(next, year)),
     Promise.resolve()
   );
 } else {
-  await runSolution(solutions[solutions.length - 1], latestYear);
+  await runSolution(solutions[solutions.length - 1], year);
 }

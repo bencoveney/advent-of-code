@@ -17,4 +17,4 @@ npm run all
 npm run template
 ```
 
-Year number is not parameterised. Search for `latestYear` to update.
+Scripts accept args for `--mode=latest`, `--mode=all` and `--year=2000`

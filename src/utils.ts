@@ -100,3 +100,52 @@ export const alphabet = [
   "y",
   "z",
 ];
+
+import { parseArgs } from "node:util";
+
+export const enum Mode {
+  Latest = "latest",
+  All = "all",
+}
+
+export function getCliArgs(): { year: number; mode: Mode } {
+  const parsedArgs = parseArgs({
+    args: process.argv,
+    options: {
+      year: {
+        type: "string",
+        short: "y",
+        default: new Date().getUTCFullYear().toString(),
+      },
+      mode: {
+        type: "string",
+        short: "m",
+        default: "latest",
+      },
+    },
+    // We don't actually care about positionals but parseArgs is unhappy otherwise.
+    allowPositionals: true,
+  });
+
+  let parsedMode = Mode.All;
+  switch (parsedArgs.values.mode) {
+    case "all":
+      parsedMode = Mode.All;
+      break;
+    case "latest":
+      parsedMode = Mode.Latest;
+      break;
+    default:
+      throw new Error(`Unknown mode: ${parsedArgs.values.mode}.`);
+  }
+
+  let parsedYear = parseInt(parsedArgs.values.year);
+  if (!parsedYear || Number.isNaN(parsedYear)) {
+    throw new Error(`Unknown year: ${parsedArgs.values.year}`);
+  }
+
+  return {
+    mode: parsedMode,
+    year: parsedYear,
+  };
+}
