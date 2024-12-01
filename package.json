@@ -1,5 +1,5 @@
 {
-  "name": "advent-of-code-2022",
+  "name": "advent-of-code",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bencoveney/advent-of-code-2022.git"
+    "url": "git+https://github.com/bencoveney/advent-of-code.git"
   },
   "bugs": {
-    "url": "https://github.com/bencoveney/advent-of-code-2022/issues"
+    "url": "https://github.com/bencoveney/advent-of-code/issues"
   },
-  "homepage": "https://github.com/bencoveney/advent-of-code-2022#readme",
+  "homepage": "https://github.com/bencoveney/advent-of-code#readme",
   "dependencies": {
     "@types/node": "^22.10.1",
     "chalk": "^5.3.0",

@@ -1,6 +1,6 @@
-# advent-of-code-2022
+# advent-of-code
 
-Solutions for https://adventofcode.com/2022
+Solutions for https://adventofcode.com/
 
 ## Usage
 
@@ -16,3 +16,5 @@ npm run all
 # Create a template for a new solution
 npm run template
 ```
+
+Year number is not parameterised. Search for `latestYear` to update.
