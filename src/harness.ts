@@ -46,9 +46,12 @@ function runPartAgainstInput(
     console.log(chalk.gray(`- ${name}: No Input`));
     return false;
   }
+  let startMillis = performance.now();
+  let endMillis = 0;
   let result = undefined;
   try {
     result = part(input);
+    endMillis = performance.now();
   } catch (e) {
     console.error((e && (e as Error).message) || e);
     result = chalk.redBright("err");
@@ -57,13 +60,18 @@ function runPartAgainstInput(
     console.log(chalk.gray(`- ${name}: No Result`));
     return false;
   }
+  let timeSpentMillis = Math.round((endMillis - startMillis) * 100) / 100;
   const correct =
     expected === undefined
       ? chalk.gray("Unknown")
       : Object.is(result, expected)
       ? chalk.greenBright("Correct")
       : chalk.redBright(`Expected ${expected}`);
-  console.log(`${chalk.gray(`- ${name}:`)} ${result} (${correct})`);
+  console.log(
+    `${chalk.gray(`- ${name}:`)} ${result} (${correct}) ${chalk.grey(
+      `in ${timeSpentMillis}ms`
+    )}`
+  );
   return Object.is(result, expected);
 }
 
