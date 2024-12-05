@@ -70,8 +70,6 @@ export function part2({ lines }: Input) {
       }
       let a1 = getChar(grid, x - 1, y - 1);
       let a2 = getChar(grid, x + 1, y + 1);
-      let b1 = getChar(grid, x + 1, y - 1);
-      let b2 = getChar(grid, x - 1, y + 1);
       switch (a1) {
         case "M":
           if (a2 !== "S") {
@@ -86,6 +84,8 @@ export function part2({ lines }: Input) {
         default:
           return;
       }
+      let b1 = getChar(grid, x + 1, y - 1);
+      let b2 = getChar(grid, x - 1, y + 1);
       switch (b1) {
         case "M":
           if (b2 !== "S") {
