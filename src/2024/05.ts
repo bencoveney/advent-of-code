@@ -1,4 +1,4 @@
-import { Input } from "../utils.js";
+import { Input, sum } from "../utils.js";
 
 type OrderingRule = { before: number; after: number };
 
@@ -23,35 +23,34 @@ function parseInput(lines: string[]): {
 }
 
 function isUpdateCorrect(update: number[], orderingRules: OrderingRule[]) {
-  const violatedRules = orderingRules.filter(({ before, after }) => {
-    if (!update.includes(before)) {
-      return false;
-    }
-    if (!update.includes(after)) {
-      return false;
-    }
-    return update.indexOf(before) > update.indexOf(after);
-  });
-  return violatedRules.length === 0;
+  return (
+    orderingRules.filter(
+      ({ before, after }) =>
+        update.includes(before) &&
+        update.includes(after) &&
+        update.indexOf(before) > update.indexOf(after)
+    ).length === 0
+  );
 }
 
-export function part1({ raw, lines, allLines, chars }: Input) {
+function middleNum(nums: number[]) {
+  return nums[(nums.length - 1) / 2];
+}
+
+export function part1({ allLines }: Input) {
   const { orderingRules, updates } = parseInput(allLines);
 
   const correctUpdates = updates.filter((update) =>
     isUpdateCorrect(update, orderingRules)
   );
 
-  return correctUpdates.reduce(
-    (prev, next) => prev + next[(next.length - 1) / 2],
-    0
-  );
+  return sum(correctUpdates.map(middleNum));
 }
 
 part1.test = 143;
 part1.real = 7198;
 
-export function part2({ raw, lines, allLines, chars }: Input) {
+export function part2({ allLines }: Input) {
   const { orderingRules, updates } = parseInput(allLines);
 
   const incorrectUpdates = updates.filter(
@@ -69,18 +68,12 @@ export function part2({ raw, lines, allLines, chars }: Input) {
     while (remainingPages.length > 0) {
       // Find a page which only appears on the left side of rules
       const next = remainingPages.find((page) =>
-        remainingRules.every(({ before, after }) => {
-          if (before === page) {
-            return true;
-          }
-          if (after === page) {
-            return false;
-          }
-          return true;
-        })
+        remainingRules.every(
+          ({ before, after }) => before === page || after !== page
+        )
       );
       if (!next) {
-        throw new Error("Could not establish order");
+        throw new Error("Bad rules");
       }
       newOrder.push(next);
       remainingPages = remainingPages.toSpliced(
@@ -92,10 +85,7 @@ export function part2({ raw, lines, allLines, chars }: Input) {
     return newOrder;
   });
 
-  return correctedUpdates.reduce(
-    (prev, next) => prev + next[(next.length - 1) / 2],
-    0
-  );
+  return sum(correctedUpdates.map(middleNum));
 }
 
 part2.test = 123;
