@@ -15,53 +15,75 @@ function parse(lines: string[]): Equation[] {
   });
 }
 
-function getPossibilities(
-  parts: number[],
-  mapper: (result: number, nextPart: number) => number[]
-): number[] {
-  let [first, ...rest] = parts;
-  return rest.reduce<number[]>(
-    (intermediateResults, nextPart) =>
-      intermediateResults.flatMap((result) => mapper(result, nextPart)),
-    [first]
-  );
-}
-
 function concatenateNumbers(left: number, right: number): number {
   const rightDigits = Math.ceil(Math.log10(right + 1));
   return left * Math.pow(10, rightDigits) + right;
 }
 
-export function part1({ lines }: Input) {
+function dfsPart1(
+  equation: Equation,
+  partIndex: number,
+  current: number
+): boolean {
+  if (current > equation.total) {
+    return false;
+  }
+  const nextPart = equation.parts[partIndex];
+  if (partIndex === equation.parts.length - 1) {
+    return (
+      current + nextPart === equation.total ||
+      current * nextPart === equation.total
+    );
+  }
+  return (
+    dfsPart1(equation, partIndex + 1, current + nextPart) ||
+    dfsPart1(equation, partIndex + 1, current * nextPart)
+  );
+}
+
+function runPart(
+  lines: string[],
+  dfs: (equation: Equation, partIndex: number, current: number) => boolean
+) {
   return sum(
     parse(lines)
-      .filter(({ total, parts }) =>
-        getPossibilities(parts, (result, nextPart) => [
-          result * nextPart,
-          result + nextPart,
-        ]).includes(total)
-      )
+      .filter((equation) => dfs(equation, 1, equation.parts[0]))
       .map(({ total }) => total)
   );
+}
+
+export function part1({ lines }: Input) {
+  return runPart(lines, dfsPart1);
 }
 
 part1.test = 3749;
 part1.real = 2299996598890;
 
-export function part2({ lines }: Input) {
-  return sum(
-    parse(lines)
-      .filter(({ total, parts }) =>
-        getPossibilities(parts, (result, nextPart) => {
-          return [
-            result * nextPart,
-            result + nextPart,
-            concatenateNumbers(result, nextPart),
-          ];
-        }).includes(total)
-      )
-      .map(({ total }) => total)
+function dfsPart2(
+  equation: Equation,
+  partIndex: number,
+  current: number
+): boolean {
+  if (current > equation.total) {
+    return false;
+  }
+  const nextPart = equation.parts[partIndex];
+  if (partIndex === equation.parts.length - 1) {
+    return (
+      current + nextPart === equation.total ||
+      current * nextPart === equation.total ||
+      concatenateNumbers(current, nextPart) === equation.total
+    );
+  }
+  return (
+    dfsPart2(equation, partIndex + 1, current + nextPart) ||
+    dfsPart2(equation, partIndex + 1, current * nextPart) ||
+    dfsPart2(equation, partIndex + 1, concatenateNumbers(current, nextPart))
   );
+}
+
+export function part2({ lines }: Input) {
+  return runPart(lines, dfsPart2);
 }
 
 part2.test = 11387;
