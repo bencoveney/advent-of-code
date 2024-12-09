@@ -70,9 +70,7 @@ export function part2({ lines }: Input) {
     if (nodeList.length <= 1) {
       return;
     }
-    nodeList.forEach(({ x, y }) => {
-      antinodeLocations.add(`${x},${y}`);
-    });
+    nodeList.forEach(({ x, y }) => antinodeLocations.add(`${x},${y}`));
     for (let left = 0; left < nodeList.length - 1; left++) {
       for (let right = left + 1; right < nodeList.length; right++) {
         const leftNode = nodeList[left];
