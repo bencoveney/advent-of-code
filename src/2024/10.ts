@@ -40,11 +40,11 @@ export function part1({ lines }: Input) {
       }
       let trailPositions = [{ x: startX, y: startY }];
       for (let height = 1; height < 10; height++) {
-        let candidates: Vector2[] = [];
+        const candidates: Vector2[] = [];
         trailPositions.forEach((prevPosition) => {
           directions.forEach((direction) => {
-            let possibilityX = prevPosition.x + direction.x;
-            let possibilityY = prevPosition.y + direction.y;
+            const possibilityX = prevPosition.x + direction.x;
+            const possibilityY = prevPosition.y + direction.y;
             if (!isValidPosition(min, max, possibilityX, possibilityY)) {
               return;
             }
@@ -87,8 +87,8 @@ export function part2({ lines }: Input) {
         let candidates: Vector2[] = [];
         trailPositions.forEach((prevPosition) => {
           directions.forEach((direction) => {
-            let possibilityX = prevPosition.x + direction.x;
-            let possibilityY = prevPosition.y + direction.y;
+            const possibilityX = prevPosition.x + direction.x;
+            const possibilityY = prevPosition.y + direction.y;
             if (!isValidPosition(min, max, possibilityX, possibilityY)) {
               return;
             }

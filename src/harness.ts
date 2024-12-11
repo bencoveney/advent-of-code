@@ -53,7 +53,7 @@ function runPartAgainstInput(
     result = part(input);
     endMillis = performance.now();
   } catch (e) {
-    console.error((e && (e as Error).message) || e);
+    console.error((e && (e as Error)?.message) || e);
     result = chalk.redBright("err");
   }
   if (!result) {

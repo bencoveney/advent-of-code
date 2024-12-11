@@ -7,7 +7,7 @@ function parse(chars: string[]): Disk {
     .map((char) => parseInt(char))
     .flatMap((size, index) => {
       if (index % 2 === 0) {
-        let fileNumber = index / 2;
+        const fileNumber = index / 2;
         return new Array(size).fill(fileNumber);
       }
       return new Array(size).fill(null);
@@ -24,11 +24,11 @@ function checksum(disk: Disk): number {
 export function part1({ chars }: Input) {
   const disk = parse(chars);
   for (let i = disk.length - 1; i >= 0; i--) {
-    let currentChar = disk[i];
+    const currentChar = disk[i];
     if (currentChar === null) {
       continue;
     }
-    let firstSpace = disk.indexOf(null);
+    const firstSpace = disk.indexOf(null);
     if (!(firstSpace < i)) {
       break;
     }
@@ -44,7 +44,7 @@ part1.real = 6344673854800;
 export function part2({ chars }: Input) {
   const disk = parse(chars);
   for (let fileIndex = disk.length - 1; fileIndex >= 0; fileIndex--) {
-    let currentChar = disk[fileIndex];
+    const currentChar = disk[fileIndex];
     if (currentChar === null) {
       continue;
     }
