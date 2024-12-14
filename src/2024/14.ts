@@ -1,8 +1,6 @@
-import { Input, sortNumsDesc } from "../utils.js";
+import { Input, sortNumsDesc, Vector2 } from "../utils.js";
 
 const robotRegex = /p=(-?\d+),(-?\d+) v=(-?\d+),(-?\d+)/g;
-
-type Vector2 = { x: number; y: number };
 
 type Robot = {
   position: Vector2;

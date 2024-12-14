@@ -1,6 +1,4 @@
-import { Input, sum } from "../utils.js";
-
-type Vector2 = { x: number; y: number };
+import { Input, sum, Vector2 } from "../utils.js";
 
 type Plot = {
   value: string;

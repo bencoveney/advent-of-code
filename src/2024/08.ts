@@ -1,9 +1,4 @@
-import { Input } from "../utils.js";
-
-type Vector2 = {
-  x: number;
-  y: number;
-};
+import { Input, Vector2 } from "../utils.js";
 
 type Nodes = {
   [frequency: string]: Vector2[];

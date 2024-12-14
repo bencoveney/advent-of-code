@@ -1,4 +1,4 @@
-import { Input, sum } from "../utils.js";
+import { Input, sum, Vector2 } from "../utils.js";
 
 type BlockedCell = {
   kind: "blocked";
@@ -13,7 +13,6 @@ type Cell = BlockedCell | WalkableCell;
 
 type Grid = Cell[][];
 
-type Vector2 = { x: number; y: number };
 const directions: Vector2[] = [
   { x: -1, y: 0 },
   { x: 0, y: 1 },

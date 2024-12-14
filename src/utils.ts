@@ -77,6 +77,8 @@ export function lowest(nums: number[]): number {
   return sorted[0] || 0;
 }
 
+export type Vector2 = { x: number; y: number };
+
 export const alphabet = [
   "a",
   "b",

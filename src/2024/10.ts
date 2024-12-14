@@ -1,4 +1,4 @@
-import { Input } from "../utils.js";
+import { Input, Vector2 } from "../utils.js";
 
 function parse(lines: string[]): {
   min: Vector2;
@@ -21,7 +21,6 @@ function isValidPosition(min: Vector2, max: Vector2, x: number, y: number) {
   return xValid && yValid;
 }
 
-type Vector2 = { x: number; y: number };
 const directions: Vector2[] = [
   { x: -1, y: 0 },
   { x: 0, y: 1 },
