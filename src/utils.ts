@@ -10,17 +10,22 @@ export function leftPad(text: string, length: number, padWith: string = "0") {
   return padWith.repeat(length - text.length) + text;
 }
 
-export type Input = {
+export type InputContent = {
   raw: string; // Caveat: Trailing whitespace trimmed.
   lines: string[]; // Excludes empty.
   allLines: string[]; // Includes empty.
   chars: string[]; // First line.
 };
 
+export type Input = InputContent & {
+  isTest: boolean; // Whether running as part of a test.
+  part: 1 | 2; // Whether running part 1 or 2.
+};
+
 export type PartAnswer<T = number> = {
   test?: T;
   real?: T;
-  (input: Input): T;
+  (input: Input & { isTest: boolean }): T;
 };
 
 export function festive(text: string): string {
