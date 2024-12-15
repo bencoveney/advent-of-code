@@ -5,8 +5,17 @@
   "type": "module",
   "scripts": {
     "latest": "tsx ./src/harness.ts --mode=latest",
+    "latest:2016": "npm run latest -- -y 2016",
+    "latest:2022": "npm run latest -- -y 2022",
+    "latest:2024": "npm run latest -- -y 2024",
     "all": "tsx ./src/harness.ts --mode=all",
-    "template": "tsx ./src/template.ts"
+    "all:2016": "npm run all -- -y 2016",
+    "all:2022": "npm run all -- -y 2022",
+    "all:2024": "npm run all -- -y 2024",
+    "template": "tsx ./src/template.ts",
+    "template:2016": "npm run template -- -y 2016",
+    "template:2022": "npm run template -- -y 2022",
+    "template:2024": "npm run template -- -y 2024"
   },
   "repository": {
     "type": "git",
