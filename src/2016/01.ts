@@ -9,7 +9,7 @@ function parse(lines: string[]): { direction: string; distance: number }[] {
 
 type Location = { n: number; e: number; total: number };
 
-export function part1({ lines, isTest }: Input) {
+export function part1({ lines }: Input) {
   const state = {
     n: 0,
     e: 0,
@@ -63,7 +63,7 @@ export function part1({ lines, isTest }: Input) {
 part1.test = 8;
 part1.real = 146;
 
-export function part2({ raw, lines, allLines, chars, isTest, part }: Input) {
+export function part2({ lines }: Input) {
   const state = {
     n: 0,
     e: 0,
